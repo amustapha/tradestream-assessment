@@ -7,7 +7,7 @@
         v-model="treshold"
         :min="minRange"
         :max="maxRange"
-        class="w-full"
+        class="w-full rounded-lg bg-transparent  appearance-none cursor-pointer custom-slider-thumb"
         step="0.1"
       />
     </div>
@@ -41,7 +41,7 @@
 
   const chartOptions = computed(() => ({
     credits: {
-      enabled: false
+      enabled: false,
     },
     chart: {
       type: "scatter",
@@ -117,7 +117,7 @@
         marker: {
           symbol: "circle",
           lineWidth: 2,
-          fillColor: 'transparent',
+          fillColor: "transparent",
         },
         states: {
           hover: {
@@ -145,7 +145,7 @@
               radius: calculatePointSize(trade.pnl_percent),
               lineWidth: 3,
               lineColor: "#7AE2B7",
-              fillColor: 'transparent'
+              fillColor: "transparent",
             },
           })),
       },
@@ -160,7 +160,7 @@
               radius: calculatePointSize(trade.pnl_percent),
               lineWidth: 3,
               lineColor: "#E25C75",
-              fillColor: 'transparent'
+              fillColor: "transparent",
             },
           })),
       },
