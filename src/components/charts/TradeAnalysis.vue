@@ -16,30 +16,18 @@
         to minimize the losses and maximize wins.
       </p>
 
-      <div class="flex flex-col gap-2 my">
-        <p class="text-sm">Current expected value per trade:</p>
-        <h2 class="text-2xl -mt-4 font-bold text-primary-500">
-          {{ expectedValuePerTrade(props.chartData.trades) }}
-        </h2>
-      </div>
-      <div class="flex flex-col gap-2 my">
-        <p class="text-sm">Current win rate:</p>
-        <h2 class="text-2xl -mt-4 font-bold text-primary-500">
-          {{ winRate(props.chartData.trades) }}%
-        </h2>
-      </div>
-      <div class="flex flex-col gap-2 my">
-        <p class="text-sm">Expected value after implementing new stoploss:</p>
-        <h2 class="text-2xl -mt-4 font-bold text-primary-500">
-          {{ expectedValuePerTrade(tradesWithStoploss) }}
-        </h2>
-      </div>
-      <div class="flex flex-col gap-2 my">
-        <p class="text-sm">Win rate after implementing new stoploss:</p>
-        <h2 class="text-2xl -mt-4 font-bold text-primary-500">
-          {{ winRate(tradesWithStoploss) }}%
-        </h2>
-      </div>
+      <StatDisplay label="Current expected value per trade">
+        {{ expectedValuePerTrade(props.chartData.trades) }}
+      </StatDisplay>
+      <StatDisplay label="Current win rate">
+        {{ winRate(props.chartData.trades) }}%
+      </StatDisplay>
+      <StatDisplay label="Expected value after implementing new stoploss">
+        {{ expectedValuePerTrade(tradesWithStoploss) }}
+      </StatDisplay>
+      <StatDisplay label="Win rate after implementing new stoploss">
+        {{ winRate(tradesWithStoploss) }}%
+      </StatDisplay>
       <div class="flex flex-col gap-2 my">
         <p class="text-sm">Stoploss Value:</p>
         <input
@@ -59,12 +47,13 @@
   import { ChartData } from "../../types/chart.types";
   import TradeScatterPlot from "./TradeScatterPlot.vue";
   import { Trade } from "../../types/chart.types";
+  import StatDisplay from "./StatDisplay.vue";
 
   const props = defineProps<{
     chartData: ChartData;
   }>();
 
-  const stoplossValue = ref(0);
+  const stoplossValue = ref(5);
 
   // const trades = computed(() => props.chartData.trades);
   const minRange = computed(
