@@ -169,18 +169,20 @@ body {
 .custom-slider-thumb::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 1.5rem; /* Size */
-  height: 10rem;
-  background: white; /* Tailwind's indigo-600 */
+  width: 1rem; /* Size */
+  height: 6rem;
+  background: #6d6d6e;
+  border: 2px solid #fcfefd;
   border-radius: 1rem; /* Round thumb */
   cursor: grab;
 }
 
 /* Firefox */
 .custom-slider-thumb::-moz-range-thumb {
-  width: 1.5rem;
-  height: 10rem;
-  background: white;
+  width: 1rem;
+  height: 6rem;
   border-radius: 1rem;
   cursor: grab;
+  background: #6d6d6e;
+  border: 2px solid #fcfefd;
 }

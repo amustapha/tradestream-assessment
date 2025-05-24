@@ -1,13 +1,13 @@
 <template>
   <div class="relative bg-gray-900 rounded-lg p-4">
     <highcharts :options="chartOptions" />
-    <div class="w-full pl-16">
+    <div class="w-full ml-2 pr-12 pl-16 absolute  top-[calc(50%-3rem)]">
       <input
         type="range"
         v-model="treshold"
         :min="minRange"
         :max="maxRange"
-        class="w-full rounded-lg bg-transparent  appearance-none cursor-pointer custom-slider-thumb"
+        class="w-full rounded-lg bg-transparent appearance-none cursor-pointer custom-slider-thumb pr-1"
         step="0.1"
       />
     </div>
