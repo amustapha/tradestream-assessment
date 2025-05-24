@@ -9,7 +9,7 @@
       />
     </div>
     <div
-      class="gap-2 w-80 bg-gray-900 rounded-lg p-4 flex flex-col justify-between"
+      class="gap-2 w-96 bg-gray-900 rounded-lg p-4 flex flex-col justify-between"
     >
       <p>
         With this chart, you can test out what stoploss would be ideal in order
@@ -17,19 +17,31 @@
       </p>
 
       <div class="flex flex-col gap-2 my">
-        <p>Current expected value per trade:</p>
-        <h2 class="text-2xl font-bold text-primary-500">
-          {{ expectedValuePerTrade(trades) }}
+        <p class="text-sm">Current expected value per trade:</p>
+        <h2 class="text-2xl -mt-4 font-bold text-primary-500">
+          {{ expectedValuePerTrade(props.chartData.trades) }}
         </h2>
       </div>
       <div class="flex flex-col gap-2 my">
-        <p>Expected value after implementing new stoploss:</p>
-        <h2 class="text-2xl font-bold text-primary-500">
-          {{ expectedValuePerTrade(trades) }}
+        <p class="text-sm">Current win rate:</p>
+        <h2 class="text-2xl -mt-4 font-bold text-primary-500">
+          {{ winRate(props.chartData.trades) }}%
         </h2>
       </div>
       <div class="flex flex-col gap-2 my">
-        <p>Stoploss Value:</p>
+        <p class="text-sm">Expected value after implementing new stoploss:</p>
+        <h2 class="text-2xl -mt-4 font-bold text-primary-500">
+          {{ expectedValuePerTrade(tradesWithStoploss) }}
+        </h2>
+      </div>
+      <div class="flex flex-col gap-2 my">
+        <p class="text-sm">Win rate after implementing new stoploss:</p>
+        <h2 class="text-2xl -mt-4 font-bold text-primary-500">
+          {{ winRate(tradesWithStoploss) }}%
+        </h2>
+      </div>
+      <div class="flex flex-col gap-2 my">
+        <p class="text-sm">Stoploss Value:</p>
         <input
           v-model="stoplossValue"
           :min="minRange"
@@ -54,7 +66,7 @@
 
   const stoplossValue = ref(0);
 
-  const trades = computed(() => props.chartData.trades);
+  // const trades = computed(() => props.chartData.trades);
   const minRange = computed(
     () =>
       Math.min(...props.chartData.trades.map((trade) => trade.mae_percent)) *
@@ -65,12 +77,34 @@
       Math.max(...props.chartData.trades.map((trade) => trade.mae_percent)) *
       100
   );
+
   const expectedValuePerTrade = computed(() => {
     return (trades: Trade[]) => {
       return (
         trades.reduce((acc, trade) => acc + trade.pnl_usd, 0) / trades.length
       );
     };
+  });
+
+  const winRate = computed(() => {
+    return (trades: Trade[]) => {
+      return (
+        (trades.filter((trade) => trade.pnl_usd > 0).length / trades.length) *
+        100
+      );
+    };
+  });
+
+  const totalProfit = computed(() => {
+    return (trades: Trade[]) => {
+      return trades.reduce((acc, trade) => acc + trade.pnl_usd, 0);
+    };
+  });
+
+  const tradesWithStoploss = computed(() => {
+    return props.chartData.trades.filter(
+      (trade) => trade.mae_percent <= stoplossValue.value / 100
+    );
   });
 
   watch(stoplossValue, (value) => {
@@ -81,6 +115,4 @@
       console.error("Stoploss value is less than min range");
     }
   });
-
-
 </script>
