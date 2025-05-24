@@ -87,11 +87,13 @@
       />
     </div>
   </div>
+  <ProfitLineChart :real-trades="props.chartData.trades" :optimal-trades="tradesWithStoploss" />
 </template>
 
 <script setup lang="ts">
   import TradeScatterPlot from "./TradeScatterPlot.vue";
   import Delta from "../display/Delta.vue";
+  import ProfitLineChart from "./ProfitLineChart.vue";
 
   import { computed, onMounted, ref, watch } from "vue";
   import { ChartData, Trade } from "../../types/chart.types";

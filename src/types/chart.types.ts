@@ -1,4 +1,4 @@
-interface Trade {
+export interface Trade {
   entry_exit_delta: number;
   fees: number;
   mae_percent: number;
