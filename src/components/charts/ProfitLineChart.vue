@@ -10,7 +10,7 @@
 
   const props = defineProps<{
     realTrades: Trade[];
-    optimalTrades: Trade[];
+    simulatedTrades: Trade[];
   }>();
 
   const rollingCummulativeReturn = (trades: Trade[]) => {
@@ -38,7 +38,7 @@
   });
 
   const optimalReturns = computed(() => {
-    return rollingCummulativeReturn(props.optimalTrades);
+    return rollingCummulativeReturn(props.simulatedTrades);
   });
 
   const isActualBetter = computed(() => {

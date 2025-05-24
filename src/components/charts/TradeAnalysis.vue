@@ -91,7 +91,7 @@
   <div class="grid lg:grid-cols-2 my-8">
     <ProfitLineChart
       :real-trades="props.chartData.trades"
-      :optimal-trades="tradesWithStoploss"
+      :simulated-trades="tradesWithStoploss"
     />
   </div>
 </template>
