@@ -1,7 +1,18 @@
-<script setup>
-import TNavbar from "./components/TNavbar.vue";
-import HighchartDemo from "./components/HighchartDemo.vue";
+<script setup lang="ts">
+import { inject, onMounted } from "vue";
   
+  import TNavbar from "./components/TNavbar.vue";
+  import HighchartDemo from "./components/HighchartDemo.vue";
+  import { ChartDataApiService } from "./services";
+
+  const chartDataApiService = inject(
+    "chartDataApiService"
+  ) as ChartDataApiService;
+
+  onMounted(async () => {
+    const chartData = await chartDataApiService.getChartData();
+    console.log(chartData);
+  });
 </script>
 
 <template>
