@@ -1,9 +1,16 @@
 <template>
+  <div class="mt-8 relative bg-gray-900 rounded-lg p-4">
     <highcharts :options="chartOptions" />
     <div class="w-full pl-16">
-      <input type="range" v-model="treshold" :min="minRange" :max="maxRange" class="w-full" />
-      <span>{{ treshold }}</span>
+      <input
+        type="range"
+        v-model="treshold"
+        :min="minRange"
+        :max="maxRange"
+        class="w-full"
+      />
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -12,13 +19,19 @@
 
   const props = defineProps<{
     chartData: ChartData;
+    treshold: number;
+    minRange: number;
+    maxRange: number;
   }>();
 
-  const treshold = ref(5);
+  const emit = defineEmits<{
+    (e: "update:treshold", value: number): void;
+  }>();
 
-  const minRange = computed(() => Math.min(...props.chartData.trades.map(trade => trade.mae_percent)) * 100);
-  const maxRange = computed(() => Math.max(...props.chartData.trades.map(trade => trade.mae_percent)) * 100);
-
+  const treshold = computed({
+    get: () => props.treshold,
+    set: (value) => emit("update:treshold", value),
+  });
 
   const chartOptions = computed(() => ({
     chart: {
@@ -48,28 +61,30 @@
         },
       },
       gridLineColor: "#333",
-      plotLines: [{
-        value: Number(treshold.value),
-        color: '#fff',
-        width: 2,
-        dashStyle: 'solid',
-        zIndex: 5,
-        draggable: true,
-        dragHandle: {
-          className: 'highcharts-drag-handle',
-          color: '#fff',
-          cursor: 'ew-resize',
-          lineWidth: 2,
-          lineColor: '#666',
-          symbol: 'circle',
-          radius: 6
+      plotLines: [
+        {
+          value: Number(treshold.value),
+          color: "#fff",
+          width: 2,
+          dashStyle: "solid",
+          zIndex: 5,
+          draggable: true,
+          dragHandle: {
+            className: "highcharts-drag-handle",
+            color: "#fff",
+            cursor: "ew-resize",
+            lineWidth: 2,
+            lineColor: "#666",
+            symbol: "circle",
+            radius: 6,
+          },
+          events: {
+            drag: function (e: { newValue: number }) {
+              treshold.value = e.newValue;
+            },
+          },
         },
-        events: {
-          drag: function(e: { newValue: number }) {
-            treshold.value = e.newValue;
-          }
-        }
-      }]
+      ],
     },
     yAxis: {
       title: {
@@ -92,7 +107,7 @@
       scatter: {
         marker: {
           radius: 5,
-          symbol: 'circle',
+          symbol: "circle",
           states: {
             hover: {
               enabled: true,
@@ -128,7 +143,6 @@
           .filter((trade) => trade.pnl_percent <= 0)
           .map((trade) => [trade.mae_percent * 100, trade.pnl_percent * 100]),
       },
-     
     ],
   }));
 </script>
