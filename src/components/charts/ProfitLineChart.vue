@@ -72,7 +72,7 @@
       data: areaRangeData.value,
       fillColor: {
         linearGradient: {
-          x1: 1,
+          x1: 0,
           y1: 0,
           x2: 0,
           y2: 1,
@@ -82,7 +82,8 @@
           [1, actualAreaColor.value],
         ],
       },
-      lineColor: actualAreaColor.value,
+      lineColor: "#5F93F5",
+      lineWidth: 3,
       colorByPoint: true,
     };
     const optimal = {
@@ -90,7 +91,7 @@
       data: optimalReturns.value,
       fillColor: {
         linearGradient: {
-          x1: 1,
+          x1: 0,
           y1: 0,
           x2: 0,
           y2: 1,
@@ -100,10 +101,12 @@
           [1, optimalAreaColor.value],
         ],
       },
-      lineColor: optimalAreaColor.value,
+      lineColor: isActualBetter.value ?  "#883746" : "#3D765F",
+      lineWidth: 3,
     };
     return isActualBetter.value ? [actual, optimal] : [optimal, actual];
   });
+
   const chartOptions = computed(() => {
     return {
       chart: {
@@ -132,7 +135,7 @@
           },
           format: "{value:%Y-%m-%d %H:%M}",
         },
-        gridLineColor: "#333",
+        gridLineColor: "transparent",
       },
       yAxis: {
         title: {
@@ -154,7 +157,7 @@
             }).format(this.value);
           },
         },
-        gridLineColor: "#333",
+        gridLineColor: "transparent",
       },
       tooltip: {
         enabled: false,
@@ -163,7 +166,7 @@
         areaspline: {
           fillColor: {
             linearGradient: {
-              x1: 1,
+              x1: 0,
               y1: 0,
               x2: 0,
               y2: 1,
@@ -173,11 +176,11 @@
               [1, actualAreaColor.value],
             ],
           },
-          lineWidth: 2,
-          lineColor: actualAreaColor.value,
+          lineWidth: 3,
+          lineColor: "white",
           states: {
             hover: {
-              lineWidth: 2,
+              lineWidth: 3,
             },
           },
         },
