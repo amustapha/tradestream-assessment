@@ -38,7 +38,8 @@ export default {
         black: "#0A0A0B",
         white: "#FCFEFD",
         gray: {
-          950: "#111112",
+          DEFAULT: "#111112",
+          950: "#1C1C1D",
           900: "#262627",
           850: "#323233",
           800: "#3D3D3E",
