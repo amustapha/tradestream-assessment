@@ -113,12 +113,8 @@
       scatter: {
         marker: {
           symbol: "circle",
-          states: {
-            hover: {
-              enabled: true,
-              lineColor: "rgb(100,100,100)",
-            },
-          },
+          lineWidth: 2,
+          fillColor: 'transparent',
         },
         states: {
           hover: {
@@ -129,35 +125,40 @@
         },
         tooltip: {
           headerFormat: "<b>{series.name}</b><br>",
-          pointFormat: "MAE: {point.x:.2f}%<br>PNL: {point.y:.2f}%<br>Size: {point.marker.radius}",
+          pointFormat:
+            "MAE: {point.x:.2f}%<br>PNL: {point.y:.2f}%<br>Size: {point.marker.radius}",
         },
       },
     },
     series: [
       {
         name: "Profitable Trades",
-        color: "#7AE2B7",
         data: props.chartData.trades
           .filter((trade) => trade.pnl_percent > 0)
           .map((trade) => ({
             x: trade.mae_percent * 100,
             y: trade.pnl_percent * 100,
             marker: {
-              radius: calculatePointSize(trade.pnl_percent)
-            }
+              radius: calculatePointSize(trade.pnl_percent),
+              lineWidth: 3,
+              lineColor: "#7AE2B7",
+              fillColor: 'transparent'
+            },
           })),
       },
       {
         name: "Losing Trades",
-        color: "#E25C75",
         data: props.chartData.trades
           .filter((trade) => trade.pnl_percent <= 0)
           .map((trade) => ({
             x: trade.mae_percent * 100,
             y: trade.pnl_percent * 100,
             marker: {
-              radius: calculatePointSize(trade.pnl_percent)
-            }
+              radius: calculatePointSize(trade.pnl_percent),
+              lineWidth: 3,
+              lineColor: "#E25C75",
+              fillColor: 'transparent'
+            },
           })),
       },
     ],
