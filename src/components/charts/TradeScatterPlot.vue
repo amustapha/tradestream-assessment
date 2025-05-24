@@ -1,14 +1,24 @@
 <template>
     <highcharts :options="chartOptions" />
+    <div class="w-full pl-16">
+      <input type="range" v-model="treshold" :min="minRange" :max="maxRange" class="w-full" />
+      <span>{{ treshold }}</span>
+    </div>
 </template>
 
 <script setup lang="ts">
-  import { computed } from "vue";
+  import { computed, ref } from "vue";
   import { ChartData } from "../../types/chart.types";
 
   const props = defineProps<{
     chartData: ChartData;
   }>();
+
+  const treshold = ref(5);
+
+  const minRange = computed(() => Math.min(...props.chartData.trades.map(trade => trade.mae_percent)) * 100);
+  const maxRange = computed(() => Math.max(...props.chartData.trades.map(trade => trade.mae_percent)) * 100);
+
 
   const chartOptions = computed(() => ({
     chart: {
@@ -38,6 +48,28 @@
         },
       },
       gridLineColor: "#333",
+      plotLines: [{
+        value: Number(treshold.value),
+        color: '#fff',
+        width: 2,
+        dashStyle: 'solid',
+        zIndex: 5,
+        draggable: true,
+        dragHandle: {
+          className: 'highcharts-drag-handle',
+          color: '#fff',
+          cursor: 'ew-resize',
+          lineWidth: 2,
+          lineColor: '#666',
+          symbol: 'circle',
+          radius: 6
+        },
+        events: {
+          drag: function(e: { newValue: number }) {
+            treshold.value = e.newValue;
+          }
+        }
+      }]
     },
     yAxis: {
       title: {
@@ -96,6 +128,7 @@
           .filter((trade) => trade.pnl_percent <= 0)
           .map((trade) => [trade.mae_percent * 100, trade.pnl_percent * 100]),
       },
+     
     ],
   }));
 </script>
