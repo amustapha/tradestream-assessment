@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-8 relative bg-gray-900 rounded-lg p-4">
+  <div class="relative bg-gray-900 rounded-lg p-4">
     <highcharts :options="chartOptions" />
     <div class="w-full pl-16">
       <input

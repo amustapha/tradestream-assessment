@@ -1,56 +1,50 @@
 <template>
-  <div class="space-y-8 flex gap-8">
-    <div class="flex-grow">
-      <TradeScatterPlot
-        v-model:treshold="stoplossValue"
-        :chart-data="chartData"
-        :min-range="minRange"
-        :max-range="maxRange"
-      />
-    </div>
+  <div class="space-y-8 flex flex-col xl:flex-row xl:flex-row-reverse gap-8">
     <div
-      class="gap-2 w-96 bg-gray-900 rounded-lg p-4 flex flex-col justify-between"
+      class="gap-2 mt-8 xl:w-96 bg-gray-900 rounded-lg p-4 flex flex-col justify-between flex-shrink-0"
     >
       <p>
         Test out what stoploss would be ideal in order to minimize the losses
         and maximize wins.
       </p>
-
-      <div>
-        <p class="text-lg font-bold">Current stats:</p>
-w
-        <div class="grid grid-cols-2 gap-2">
-          <StatDisplay label="Value per trade">
-            {{ expectedValuePerTrade(props.chartData.trades) }}
-          </StatDisplay>
-          <StatDisplay label="Win rate">
-            {{ winRate(props.chartData.trades) }}
-          </StatDisplay>
-          <StatDisplay label="Number of trades">
-            {{ props.chartData.trades.length }}
-          </StatDisplay>
-          <StatDisplay label="Total profit">
-            {{ totalProfit(props.chartData.trades) }}
-          </StatDisplay>
+      <div class="flex flex-col md:flex-row justify-between xl:flex-col">
+        <div class="flex-grow">
+          <p class="text-lg font-bold">Current stats:</p>
+          <div class="grid grid-cols-2 gap-2">
+            <StatDisplay label="Value per trade">
+              {{ expectedValuePerTrade(props.chartData.trades) }}
+            </StatDisplay>
+            <StatDisplay label="Win rate">
+              {{ winRate(props.chartData.trades) }}
+            </StatDisplay>
+            <StatDisplay label="Number of trades">
+              {{ props.chartData.trades.length }}
+            </StatDisplay>
+            <StatDisplay label="Total profit">
+              {{ totalProfit(props.chartData.trades) }}
+            </StatDisplay>
+          </div>
         </div>
-      </div>
 
-      <hr class="my-2" />
-      <div>
-        <p class="text-lg font-bold">Estimated improvements:</p>
-        <div class="grid grid-cols-2 gap-2">
-          <StatDisplay label="Value per trade">
-            {{ expectedValuePerTrade(tradesWithStoploss) }}
-          </StatDisplay>
-          <StatDisplay label="Win rate">
-            {{ winRate(tradesWithStoploss) }}
-          </StatDisplay>
-          <StatDisplay label="Number of trades">
-            {{ tradesWithStoploss.length }}
-          </StatDisplay>
-          <StatDisplay label="Total profit">
-            {{ totalProfit(tradesWithStoploss) }}
-          </StatDisplay>
+        <hr class="my-8" />
+        <div
+          class="flex-grow border-l border-gray-700 pl-0 md:pl-8 lg:pl-16 xl:pl-0 xl:border-l-0"
+        >
+          <p class="text-lg font-bold">Estimated improvements:</p>
+          <div class="grid grid-cols-2 gap-2">
+            <StatDisplay label="Value per trade">
+              {{ expectedValuePerTrade(tradesWithStoploss) }}
+            </StatDisplay>
+            <StatDisplay label="Win rate">
+              {{ winRate(tradesWithStoploss) }}
+            </StatDisplay>
+            <StatDisplay label="Number of trades">
+              {{ tradesWithStoploss.length }}
+            </StatDisplay>
+            <StatDisplay label="Total profit">
+              {{ totalProfit(tradesWithStoploss) }}
+            </StatDisplay>
+          </div>
         </div>
       </div>
       <div class="flex flex-col gap-2 my">
@@ -63,6 +57,14 @@ w
           class="bg-gray-800 rounded-sm ring-0 focus:ring-0 focus:ring-offset-0 focus:border-primary-500 p-2 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none border-0 outline-none"
         />
       </div>
+    </div>
+    <div class="flex-grow">
+      <TradeScatterPlot
+        v-model:treshold="stoplossValue"
+        :chart-data="chartData"
+        :min-range="minRange"
+        :max-range="maxRange"
+      />
     </div>
   </div>
 </template>
