@@ -28,7 +28,7 @@
 
         <hr class="my-8" />
         <div
-          class="flex-grow border-l border-gray-700 pl-0 md:pl-8 lg:pl-16 xl:pl-0 xl:border-l-0"
+          class="flex-grow md:border-l border-gray-700 pl-0 md:pl-8 lg:pl-16 xl:pl-0 xl:border-l-0"
         >
           <p class="text-lg font-bold">Estimated improvements:</p>
           <div class="grid grid-cols-2 gap-2">
