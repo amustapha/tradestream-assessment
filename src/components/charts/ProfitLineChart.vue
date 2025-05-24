@@ -1,5 +1,7 @@
 <template>
-  <highcharts :options="chartOptions" />
+  <div class="relative bg-gray-900 rounded-lg p-4">
+    <highcharts :options="chartOptions" />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -101,7 +103,7 @@
           [1, optimalAreaColor.value],
         ],
       },
-      lineColor: isActualBetter.value ?  "#883746" : "#3D765F",
+      lineColor: isActualBetter.value ? "#883746" : "#3D765F",
       lineWidth: 3,
     };
     return isActualBetter.value ? [actual, optimal] : [optimal, actual];
@@ -113,13 +115,23 @@
         type: "areaspline",
         backgroundColor: "#262627",
         borderRadius: 10,
-        height: "40%",
+        height: "75%",
       },
       title: {
         text: "Cummulative Return",
         style: {
           color: "white",
         },
+        align: "left",
+        margin: 32,
+      },
+      legend: {
+        itemStyle: {
+          color: 'white'
+        },
+        symbolWidth: 12,
+        symbolHeight: 12,
+        symbolRadius: 0
       },
       xAxis: {
         type: "datetime",
@@ -133,7 +145,7 @@
           style: {
             color: "white",
           },
-          format: "{value:%Y-%m-%d %H:%M}",
+          format: "{value:%Y-%m-%d}",
         },
         gridLineColor: "transparent",
       },
@@ -178,11 +190,14 @@
           },
           lineWidth: 3,
           lineColor: "white",
+          marker: {
+            enabled: false
+          },
           states: {
             hover: {
-              lineWidth: 3,
-            },
-          },
+              enabled: false
+            }
+          }
         },
       },
       series: series.value,
