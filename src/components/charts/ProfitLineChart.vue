@@ -39,13 +39,20 @@
     return rollingCummulativeReturn(props.optimalTrades);
   });
 
+  const isActualBetter = computed(() => {
+   const lastActual = actualReturns.value.at(-1);
+   const lastOptimal = optimalReturns.value.at(-1);
+   if (lastActual && lastOptimal) {
+    return lastActual.y > lastOptimal.y;
+   }
+   return true;
+  });
+
   const areaRangeData = computed(() => {
     return actualReturns.value.map((point, index) => {
-      const optimalPoint = optimalReturns.value[index];
       return {
         x: point.x,
-        low: Math.min(point.y, optimalPoint.y),
-        high: Math.max(point.y, optimalPoint.y),
+        y: point.y,
       };
     });
   });
@@ -53,7 +60,7 @@
   const chartOptions = computed(() => {
     return {
       chart: {
-        type: "arearange",
+        type: "areaspline",
         backgroundColor: "#262627",
         borderRadius: 10,
         height: "40%",
@@ -103,28 +110,23 @@
         gridLineColor: "#333",
       },
       tooltip: {
-        xDateFormat: "%Y-%m-%d %H:%M",
-        valueDecimals: 2,
-        valuePrefix: "$",
-        style: {
-          color: "white",
-        },
+        enabled: false,
       },
       plotOptions: {
-        arearange: {
+        areaspline: {
           fillColor: {
             linearGradient: {
-              x1: 0,
+              x1: 1,
               y1: 0,
               x2: 0,
               y2: 1,
             },
             stops: [
-              [0, "#7AE2B7"],
+              [0, "rgba(122, 226, 183, 0.8)"],
               [1, "rgba(122, 226, 183, 0.1)"],
             ],
           },
-          lineWidth: 1,
+          lineWidth: 2,
           lineColor: "#7AE2B7",
           states: {
             hover: {
@@ -135,10 +137,41 @@
       },
       series: [
         {
-          name: "Profit Range",
+          name: "Actual Returns",
           data: areaRangeData.value,
-          color: "#7AE2B7",
+          fillColor: {
+            linearGradient: {
+              x1: 1,
+              y1: 0,
+              x2: 0,
+              y2: 1,
+            },
+            stops: [
+              [0, "rgba(226, 92, 117)"],
+              [1, "rgba(226, 92, 117"],
+            ],
+          },
+          lineColor: "#E25C75",
+          colorByPoint: true
         },
+        {
+          name: "Optimal Returns",
+          data: optimalReturns.value,
+          color: "#7AE2B7",
+          fillColor: {
+            linearGradient: {
+              x1: 1,
+              y1: 0,
+              x2: 0,
+              y2: 1,
+            },
+            stops: [
+              [0, "rgba(122, 226, 183)"],
+              [1, "rgba(122, 226, 183)"],
+            ],
+          },
+          lineColor: "#7AE2B7",
+        }
       ],
       credits: {
         enabled: false,
