@@ -9,7 +9,7 @@
 </script>
 
 <template>
-  <h1 class="text-3xl font-bold ">Hello world!</h1>
+  <h1 class="text-3xl font-bold text-sematic-red-500">Hello world!</h1>
 
-  <p class="text-3xl font-bold ">Sign in</p>
+  <p class="text-3xl font-bold bg-sematic-orange ">Sign in</p>
 </template>

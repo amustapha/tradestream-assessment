@@ -2,6 +2,19 @@
 export default {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
+    fontSize: {
+      xs: "0.688rem",
+      sm: "0.875rem",
+      base: "1rem",
+      lg: "1.125rem",
+      xl: "1.313rem",
+      "2xl": "1.5rem",
+      "3xl": "1.75rem",
+      "4xl": "2.313rem",
+      "5xl": "3.063rem",
+      "6xl": "3.5rem",
+      "7xl": "4.063rem",
+    },
     extend: {
       fontFamily: {
         sans: ["Averta", "system-ui", "sans-serif"],
