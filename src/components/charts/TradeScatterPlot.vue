@@ -40,6 +40,9 @@
   };
 
   const chartOptions = computed(() => ({
+    credits: {
+      enabled: false
+    },
     chart: {
       type: "scatter",
       backgroundColor: "#262627",
