@@ -8,6 +8,7 @@
         :min="minRange"
         :max="maxRange"
         class="w-full"
+        step="0.1"
       />
     </div>
   </div>
