@@ -40,12 +40,20 @@
   });
 
   const isActualBetter = computed(() => {
-   const lastActual = actualReturns.value.at(-1);
-   const lastOptimal = optimalReturns.value.at(-1);
-   if (lastActual && lastOptimal) {
-    return lastActual.y > lastOptimal.y;
-   }
-   return true;
+    const lastActual = actualReturns.value.at(-1);
+    const lastOptimal = optimalReturns.value.at(-1);
+    if (lastActual && lastOptimal) {
+      return lastActual.y > lastOptimal.y;
+    }
+    return true;
+  });
+
+  const actualAreaColor = computed(() => {
+    return isActualBetter.value ? "#E25C75" : "#262627";
+  });
+
+  const optimalAreaColor = computed(() => {
+    return isActualBetter.value ? "#262627" : "#7AE2B7";
   });
 
   const areaRangeData = computed(() => {
@@ -57,6 +65,45 @@
     });
   });
 
+  const series = computed(() => {
+    const actual = {
+      name: "Actual Returns",
+      color: "white",
+      data: areaRangeData.value,
+      fillColor: {
+        linearGradient: {
+          x1: 1,
+          y1: 0,
+          x2: 0,
+          y2: 1,
+        },
+        stops: [
+          [0, actualAreaColor.value],
+          [1, actualAreaColor.value],
+        ],
+      },
+      lineColor: actualAreaColor.value,
+      colorByPoint: true,
+    };
+    const optimal = {
+      name: "Optimal Returns",
+      data: optimalReturns.value,
+      fillColor: {
+        linearGradient: {
+          x1: 1,
+          y1: 0,
+          x2: 0,
+          y2: 1,
+        },
+        stops: [
+          [0, optimalAreaColor.value],
+          [1, optimalAreaColor.value],
+        ],
+      },
+      lineColor: optimalAreaColor.value,
+    };
+    return isActualBetter.value ? [actual, optimal] : [optimal, actual];
+  });
   const chartOptions = computed(() => {
     return {
       chart: {
@@ -122,12 +169,12 @@
               y2: 1,
             },
             stops: [
-              [0, "rgba(122, 226, 183, 0.8)"],
-              [1, "rgba(122, 226, 183, 0.1)"],
+              [0, actualAreaColor.value],
+              [1, actualAreaColor.value],
             ],
           },
           lineWidth: 2,
-          lineColor: "#7AE2B7",
+          lineColor: actualAreaColor.value,
           states: {
             hover: {
               lineWidth: 2,
@@ -135,44 +182,7 @@
           },
         },
       },
-      series: [
-        {
-          name: "Actual Returns",
-          data: areaRangeData.value,
-          fillColor: {
-            linearGradient: {
-              x1: 1,
-              y1: 0,
-              x2: 0,
-              y2: 1,
-            },
-            stops: [
-              [0, "rgba(226, 92, 117)"],
-              [1, "rgba(226, 92, 117"],
-            ],
-          },
-          lineColor: "#E25C75",
-          colorByPoint: true
-        },
-        {
-          name: "Optimal Returns",
-          data: optimalReturns.value,
-          color: "#7AE2B7",
-          fillColor: {
-            linearGradient: {
-              x1: 1,
-              y1: 0,
-              x2: 0,
-              y2: 1,
-            },
-            stops: [
-              [0, "rgba(122, 226, 183)"],
-              [1, "rgba(122, 226, 183)"],
-            ],
-          },
-          lineColor: "#7AE2B7",
-        }
-      ],
+      series: series.value,
       credits: {
         enabled: false,
       },
