@@ -1,6 +1,8 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import { useLoaderStore } from "../stores/loader";
 
-export default abstract class BaseApiService<BaseResponseType> {
+
+export default abstract class BaseApiService<BaseResponseType = any> {
   client: AxiosInstance;
   constructor(
     protected readonly baseUrl: string,
@@ -20,8 +22,8 @@ export default abstract class BaseApiService<BaseResponseType> {
     config: AxiosRequestConfig,
     loadingMessage = "Loading..."
   ): Promise<T> {
-    // TODO: Add loading state
-    console.log({ loadingMessage });
+    const loaderStore = useLoaderStore();
+    loaderStore.addLoader(loadingMessage);
     return this.client
       .request<T>(config)
       .then((res) => res.data)
@@ -31,8 +33,7 @@ export default abstract class BaseApiService<BaseResponseType> {
         return Promise.reject(err);
       })
       .finally(() => {
-        // TODO: Remove loading state
-        console.log("Done", loadingMessage);
+        loaderStore.removeLoader(loadingMessage);
       });
   }
 
