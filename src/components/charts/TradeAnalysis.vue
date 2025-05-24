@@ -65,13 +65,16 @@
       </div>
       <div class="flex flex-col gap-2 my">
         <p class="text-sm">Stoploss Value:</p>
-        <input
-          v-model="stoplossValue"
-          :min="minRange"
-          :max="maxRange"
-          type="number"
-          class="bg-gray-800 rounded-sm ring-0 focus:ring-0 focus:ring-offset-0 focus:border-primary-500 p-2 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none border-0 outline-none"
-        />
+        <div class="relative">
+          <input
+            v-model="stoplossValue"
+            :min="minRange"
+            :max="maxRange"
+            type="number"
+            class="bg-gray-800 w-full rounded-sm ring-0 focus:ring-0 focus:ring-offset-0 focus:border-primary-500 p-2 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none border-0 outline-none pr-8"
+          />
+          <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">&percnt;</span>
+        </div>
       </div>
     </div>
     <div class="flex-grow">
