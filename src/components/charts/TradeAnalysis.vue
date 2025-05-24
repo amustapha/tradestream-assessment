@@ -22,11 +22,19 @@
       <StatDisplay label="Current win rate">
         {{ winRate(props.chartData.trades) }}%
       </StatDisplay>
+      <StatDisplay label="Current Profit">
+        {{ totalProfit(props.chartData.trades) }}
+      </StatDisplay>
       <StatDisplay label="Expected value after implementing new stoploss">
         {{ expectedValuePerTrade(tradesWithStoploss) }}
       </StatDisplay>
       <StatDisplay label="Win rate after implementing new stoploss">
         {{ winRate(tradesWithStoploss) }}%
+      </StatDisplay>
+      <StatDisplay
+        label="Estimated total   profit after implementing new stoploss"
+      >
+        {{ totalProfit(tradesWithStoploss) }}
       </StatDisplay>
       <div class="flex flex-col gap-2 my">
         <p class="text-sm">Stoploss Value:</p>
@@ -48,6 +56,7 @@
   import TradeScatterPlot from "./TradeScatterPlot.vue";
   import { Trade } from "../../types/chart.types";
   import StatDisplay from "./StatDisplay.vue";
+  import { formatMoney, formatPercentage } from "../../utils/filters";
 
   const props = defineProps<{
     chartData: ChartData;
@@ -55,7 +64,6 @@
 
   const stoplossValue = ref(5);
 
-  // const trades = computed(() => props.chartData.trades);
   const minRange = computed(
     () =>
       Math.min(...props.chartData.trades.map((trade) => trade.mae_percent)) *
@@ -69,7 +77,7 @@
 
   const expectedValuePerTrade = computed(() => {
     return (trades: Trade[]) => {
-      return (
+      return formatMoney(
         trades.reduce((acc, trade) => acc + trade.pnl_usd, 0) / trades.length
       );
     };
@@ -77,16 +85,16 @@
 
   const winRate = computed(() => {
     return (trades: Trade[]) => {
-      return (
+      return formatPercentage(
         (trades.filter((trade) => trade.pnl_usd > 0).length / trades.length) *
-        100
+          100
       );
     };
   });
 
   const totalProfit = computed(() => {
     return (trades: Trade[]) => {
-      return trades.reduce((acc, trade) => acc + trade.pnl_usd, 0);
+      return formatMoney(trades.reduce((acc, trade) => acc + trade.pnl_usd, 0));
     };
   });
 
@@ -97,7 +105,6 @@
   });
 
   watch(stoplossValue, (value) => {
-    // TODO: Add a toast notification to the user
     if (value > maxRange.value) {
       console.error("Stoploss value is greater than max range");
     } else if (value < minRange.value) {
