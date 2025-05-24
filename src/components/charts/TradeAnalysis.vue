@@ -12,16 +12,16 @@
           <p class="text-lg font-bold">Current stats:</p>
           <div class="grid grid-cols-2 gap-2">
             <StatDisplay label="Value per trade">
-              {{ expectedValuePerTrade(props.chartData.trades) }}
+              {{ formatMoney(expectedValuePerTrade(props.chartData.trades)) }}
             </StatDisplay>
             <StatDisplay label="Win rate">
-              {{ winRate(props.chartData.trades) }}
+              {{ formatPercentage(winRate(props.chartData.trades)) }}
             </StatDisplay>
             <StatDisplay label="Number of trades">
               {{ props.chartData.trades.length }}
             </StatDisplay>
             <StatDisplay label="Total profit">
-              {{ totalProfit(props.chartData.trades) }}
+              {{ formatMoney(totalProfit(props.chartData.trades)) }}
             </StatDisplay>
           </div>
         </div>
@@ -33,16 +33,32 @@
           <p class="text-lg font-bold">Estimated improvements:</p>
           <div class="grid grid-cols-2 gap-2">
             <StatDisplay label="Value per trade">
-              {{ expectedValuePerTrade(tradesWithStoploss) }}
+              {{ formatMoney(expectedValuePerTrade(tradesWithStoploss)) }}
+              <Delta
+                :base="expectedValuePerTrade(props.chartData.trades)"
+                :optimized="expectedValuePerTrade(tradesWithStoploss)"
+              />
             </StatDisplay>
             <StatDisplay label="Win rate">
-              {{ winRate(tradesWithStoploss) }}
+              {{ formatPercentage(winRate(tradesWithStoploss)) }}
+              <Delta
+                :base="winRate(props.chartData.trades)"
+                :optimized="winRate(tradesWithStoploss)"
+              />
             </StatDisplay>
             <StatDisplay label="Number of trades">
               {{ tradesWithStoploss.length }}
+              <Delta
+                :base="props.chartData.trades.length"
+                :optimized="tradesWithStoploss.length"
+              />
             </StatDisplay>
             <StatDisplay label="Total profit">
-              {{ totalProfit(tradesWithStoploss) }}
+              {{ formatMoney(totalProfit(tradesWithStoploss)) }}
+              <Delta
+                :base="totalProfit(props.chartData.trades)"
+                :optimized="totalProfit(tradesWithStoploss)"
+              />
             </StatDisplay>
           </div>
         </div>
@@ -70,10 +86,11 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, ref, watch } from "vue";
-  import { ChartData } from "../../types/chart.types";
   import TradeScatterPlot from "./TradeScatterPlot.vue";
-  import { Trade } from "../../types/chart.types";
+  import Delta from "./Delta.vue";
+
+  import { computed, ref, watch } from "vue";
+  import { ChartData, Trade } from "../../types/chart.types";
   import StatDisplay from "./StatDisplay.vue";
   import { formatMoney, formatPercentage } from "../../utils/filters";
 
@@ -94,34 +111,27 @@
       100
   );
 
-  const expectedValuePerTrade = computed(() => {
-    return (trades: Trade[]) => {
-      return formatMoney(
-        trades.reduce((acc, trade) => acc + trade.pnl_usd, 0) / trades.length
-      );
-    };
-  });
-
-  const winRate = computed(() => {
-    return (trades: Trade[]) => {
-      return formatPercentage(
-        (trades.filter((trade) => trade.pnl_usd > 0).length / trades.length) *
-          100
-      );
-    };
-  });
-
-  const totalProfit = computed(() => {
-    return (trades: Trade[]) => {
-      return formatMoney(trades.reduce((acc, trade) => acc + trade.pnl_usd, 0));
-    };
-  });
-
   const tradesWithStoploss = computed(() => {
     return props.chartData.trades.filter(
       (trade) => trade.mae_percent <= stoplossValue.value / 100
     );
   });
+
+  const winRate = (trades: Trade[]): number => {
+    return (
+      (trades.filter((trade) => trade.pnl_usd > 0).length / trades.length) * 100
+    );
+  };
+
+  const expectedValuePerTrade = (trades: Trade[]): number => {
+    return (
+      trades.reduce((acc, trade) => acc + trade.pnl_usd, 0) / trades.length
+    );
+  };
+
+  const totalProfit = (trades: Trade[]): number => {
+    return trades.reduce((acc, trade) => acc + trade.pnl_usd, 0);
+  };
 
   watch(stoplossValue, (value) => {
     if (value > maxRange.value) {
