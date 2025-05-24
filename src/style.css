@@ -2,8 +2,152 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Averta';
+  src: url('./assets/fonts/AvertaPE-Extrathin.woff2') format('woff2'),
+       url('./assets/fonts/AvertaPE-Extrathin.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Averta';
+  src: url('./assets/fonts/AvertaPE-ExtrathinItalic.woff2') format('woff2'),
+       url('./assets/fonts/AvertaPE-ExtrathinItalic.woff') format('woff');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Averta';
+  src: url('./assets/fonts/AvertaPE-Thin.woff2') format('woff2'),
+       url('./assets/fonts/AvertaPE-Thin.woff') format('woff');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Averta';
+  src: url('./assets/fonts/AvertaPE-ThinItalic.woff2') format('woff2'),
+       url('./assets/fonts/AvertaPE-ThinItalic.woff') format('woff');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Averta';
+  src: url('./assets/fonts/AvertaPE-Light.woff2') format('woff2'),
+       url('./assets/fonts/AvertaPE-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Averta';
+  src: url('./assets/fonts/AvertaPE-LightItalic.woff2') format('woff2'),
+       url('./assets/fonts/AvertaPE-LightItalic.woff') format('woff');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Averta';
+  src: url('./assets/fonts/AvertaPE-Regular.woff2') format('woff2'),
+       url('./assets/fonts/AvertaPE-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Averta';
+  src: url('./assets/fonts/AvertaPE-RegularItalic.woff2') format('woff2'),
+       url('./assets/fonts/AvertaPE-RegularItalic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Averta';
+  src: url('./assets/fonts/AvertaPE-Semibold.woff2') format('woff2'),
+       url('./assets/fonts/AvertaPE-Semibold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Averta';
+  src: url('./assets/fonts/AvertaPE-SemiboldItalic.woff2') format('woff2'),
+       url('./assets/fonts/AvertaPE-SemiboldItalic.woff') format('woff');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Averta';
+  src: url('./assets/fonts/AvertaPE-Bold.woff2') format('woff2'),
+       url('./assets/fonts/AvertaPE-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Averta';
+  src: url('./assets/fonts/AvertaPE-BoldItalic.woff2') format('woff2'),
+       url('./assets/fonts/AvertaPE-BoldItalic.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Averta';
+  src: url('./assets/fonts/AvertaPE-Extrabold.woff2') format('woff2'),
+       url('./assets/fonts/AvertaPE-Extrabold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Averta';
+  src: url('./assets/fonts/AvertaPE-ExtraboldItalic.woff2') format('woff2'),
+       url('./assets/fonts/AvertaPE-ExtraboldItalic.woff') format('woff');
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Averta';
+  src: url('./assets/fonts/AvertaPE-Black.woff2') format('woff2'),
+       url('./assets/fonts/AvertaPE-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Averta';
+  src: url('./assets/fonts/AvertaPE-BlackItalic.woff2') format('woff2'),
+       url('./assets/fonts/AvertaPE-BlackItalic.woff') format('woff');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Averta', system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
