@@ -12,30 +12,47 @@
       class="gap-2 w-96 bg-gray-900 rounded-lg p-4 flex flex-col justify-between"
     >
       <p>
-        With this chart, you can test out what stoploss would be ideal in order
-        to minimize the losses and maximize wins.
+        Test out what stoploss would be ideal in order to minimize the losses
+        and maximize wins.
       </p>
 
-      <StatDisplay label="Current expected value per trade">
-        {{ expectedValuePerTrade(props.chartData.trades) }}
-      </StatDisplay>
-      <StatDisplay label="Current win rate">
-        {{ winRate(props.chartData.trades) }}%
-      </StatDisplay>
-      <StatDisplay label="Current Profit">
-        {{ totalProfit(props.chartData.trades) }}
-      </StatDisplay>
-      <StatDisplay label="Expected value after implementing new stoploss">
-        {{ expectedValuePerTrade(tradesWithStoploss) }}
-      </StatDisplay>
-      <StatDisplay label="Win rate after implementing new stoploss">
-        {{ winRate(tradesWithStoploss) }}%
-      </StatDisplay>
-      <StatDisplay
-        label="Estimated total   profit after implementing new stoploss"
-      >
-        {{ totalProfit(tradesWithStoploss) }}
-      </StatDisplay>
+      <div>
+        <p class="text-lg font-bold">Current stats:</p>
+
+        <div class="grid grid-cols-2 gap-2">
+          <StatDisplay label="Value per trade">
+            {{ expectedValuePerTrade(props.chartData.trades) }}
+          </StatDisplay>
+          <StatDisplay label="Win rate">
+            {{ winRate(props.chartData.trades) }}%
+          </StatDisplay>
+          <StatDisplay label="Number of trades">
+            {{ props.chartData.trades.length }}
+          </StatDisplay>
+          <StatDisplay label="Total profit">
+            {{ totalProfit(props.chartData.trades) }}
+          </StatDisplay>
+        </div>
+      </div>
+
+      <hr class="my-2" />
+      <div>
+        <p class="text-lg font-bold">Estimated improvements:</p>
+        <div class="grid grid-cols-2 gap-2">
+          <StatDisplay label="Value per trade">
+            {{ expectedValuePerTrade(tradesWithStoploss) }}
+          </StatDisplay>
+          <StatDisplay label="Win rate">
+            {{ winRate(tradesWithStoploss) }}%
+          </StatDisplay>
+          <StatDisplay label="Number of trades">
+            {{ tradesWithStoploss.length }}
+          </StatDisplay>
+          <StatDisplay label="Total profit">
+            {{ totalProfit(tradesWithStoploss) }}
+          </StatDisplay>
+        </div>
+      </div>
       <div class="flex flex-col gap-2 my">
         <p class="text-sm">Stoploss Value:</p>
         <input
