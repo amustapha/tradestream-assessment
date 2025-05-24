@@ -34,12 +34,17 @@
     set: (value) => emit("update:treshold", value),
   });
 
+  const calculatePointSize = (pnl: number) => {
+    const absPnl = Math.abs(pnl * 100);
+    return Math.max(3, Math.min(10, 3 + absPnl / 2));
+  };
+
   const chartOptions = computed(() => ({
     chart: {
       type: "scatter",
       backgroundColor: "#262627",
       borderRadius: 10,
-      height: "40%",
+      height: "60%",
     },
     title: {
       text: "Trade MAE vs PNL Analysis",
@@ -107,7 +112,6 @@
     plotOptions: {
       scatter: {
         marker: {
-          radius: 5,
           symbol: "circle",
           states: {
             hover: {
@@ -125,7 +129,7 @@
         },
         tooltip: {
           headerFormat: "<b>{series.name}</b><br>",
-          pointFormat: "MAE: {point.x:.2f}%<br>PNL: {point.y:.2f}%",
+          pointFormat: "MAE: {point.x:.2f}%<br>PNL: {point.y:.2f}%<br>Size: {point.marker.radius}",
         },
       },
     },
@@ -135,14 +139,26 @@
         color: "#7AE2B7",
         data: props.chartData.trades
           .filter((trade) => trade.pnl_percent > 0)
-          .map((trade) => [trade.mae_percent * 100, trade.pnl_percent * 100]),
+          .map((trade) => ({
+            x: trade.mae_percent * 100,
+            y: trade.pnl_percent * 100,
+            marker: {
+              radius: calculatePointSize(trade.pnl_percent)
+            }
+          })),
       },
       {
         name: "Losing Trades",
         color: "#E25C75",
         data: props.chartData.trades
           .filter((trade) => trade.pnl_percent <= 0)
-          .map((trade) => [trade.mae_percent * 100, trade.pnl_percent * 100]),
+          .map((trade) => ({
+            x: trade.mae_percent * 100,
+            y: trade.pnl_percent * 100,
+            marker: {
+              radius: calculatePointSize(trade.pnl_percent)
+            }
+          })),
       },
     ],
   }));
