@@ -147,7 +147,7 @@
 }
 
 body {
-  @apply bg-black text-white;
+  @apply bg-gray-950 text-white;
   margin: 0;
   display: flex;
   place-items: center;
@@ -165,14 +165,3 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-@media (prefers-color-scheme: light) {
-  :root {
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
