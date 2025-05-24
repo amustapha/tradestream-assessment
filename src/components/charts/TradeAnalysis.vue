@@ -18,13 +18,13 @@
 
       <div>
         <p class="text-lg font-bold">Current stats:</p>
-
+w
         <div class="grid grid-cols-2 gap-2">
           <StatDisplay label="Value per trade">
             {{ expectedValuePerTrade(props.chartData.trades) }}
           </StatDisplay>
           <StatDisplay label="Win rate">
-            {{ winRate(props.chartData.trades) }}%
+            {{ winRate(props.chartData.trades) }}
           </StatDisplay>
           <StatDisplay label="Number of trades">
             {{ props.chartData.trades.length }}
@@ -43,7 +43,7 @@
             {{ expectedValuePerTrade(tradesWithStoploss) }}
           </StatDisplay>
           <StatDisplay label="Win rate">
-            {{ winRate(tradesWithStoploss) }}%
+            {{ winRate(tradesWithStoploss) }}
           </StatDisplay>
           <StatDisplay label="Number of trades">
             {{ tradesWithStoploss.length }}
