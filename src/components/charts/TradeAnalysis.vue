@@ -73,7 +73,9 @@
             type="number"
             class="bg-gray-800 w-full rounded-sm ring-0 focus:ring-0 focus:ring-offset-0 focus:border-primary-500 p-2 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none border-0 outline-none pr-8"
           />
-          <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">&percnt;</span>
+          <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+            >&percnt;</span
+          >
         </div>
       </div>
     </div>
@@ -92,7 +94,7 @@
   import TradeScatterPlot from "./TradeScatterPlot.vue";
   import Delta from "./Delta.vue";
 
-  import { computed, ref, watch } from "vue";
+  import { computed, onMounted, ref, watch } from "vue";
   import { ChartData, Trade } from "../../types/chart.types";
   import StatDisplay from "./StatDisplay.vue";
   import { formatMoney, formatPercentage } from "../../utils/filters";
@@ -142,5 +144,25 @@
     } else if (value < minRange.value) {
       console.error("Stoploss value is less than min range");
     }
+  });
+
+  const getBestStoploss = (): number => {
+    let best_stop_loss_percentage = 0;
+    let profit_at_best_stop_loss = 0;
+    for (const level of props.chartData.mae_levels) {
+      const trades_with_stoploss_at_level = props.chartData.trades.filter(
+        (trade) => trade.mae_percent <= level
+      );
+      const profit = totalProfit(trades_with_stoploss_at_level);
+      if (profit > profit_at_best_stop_loss) {
+        best_stop_loss_percentage = level;
+        profit_at_best_stop_loss = profit;
+      }
+    }
+    return best_stop_loss_percentage * 100;
+  };
+
+  onMounted(() => {
+    stoplossValue.value = getBestStoploss();
   });
 </script>
