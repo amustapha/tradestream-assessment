@@ -91,11 +91,11 @@
 
 <script setup lang="ts">
   import TradeScatterPlot from "./TradeScatterPlot.vue";
-  import Delta from "./Delta.vue";
+  import Delta from "../display/Delta.vue";
 
   import { computed, onMounted, ref, watch } from "vue";
   import { ChartData, Trade } from "../../types/chart.types";
-  import StatDisplay from "./StatDisplay.vue";
+  import StatDisplay from "../display/StatDisplay.vue";
   import { formatMoney, formatPercentage } from "../../utils/filters";
 
   const props = defineProps<{
