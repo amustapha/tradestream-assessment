@@ -10,13 +10,13 @@
 
 <script setup lang="ts">
   import { inject, onMounted, ref } from "vue";
-
   import FullPageLoader from "./components/FullPageLoader.vue";
   import TNavbar from "./components/TNavbar.vue";
   import TradeAnalysis from "./components/charts/TradeAnalysis.vue";
 
   import { ChartDataApiService } from "./services";
   import { ChartData } from "./types/chart.types";
+
 
   const chartDataApiService = inject(
     "chartDataApiService"

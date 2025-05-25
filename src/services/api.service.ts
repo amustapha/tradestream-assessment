@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { useLoaderStore } from "../stores/loader";
-
+import { notify } from "../utils/notification";
 
 export default abstract class BaseApiService<BaseResponseType = any> {
   client: AxiosInstance;
@@ -28,7 +28,7 @@ export default abstract class BaseApiService<BaseResponseType = any> {
       .request<T>(config)
       .then((res) => res.data)
       .catch((err) => {
-        // TODO: Handle error and show toast
+        notify(err.message, "error");
         console.error(err);
         return Promise.reject(err);
       })
@@ -39,12 +39,14 @@ export default abstract class BaseApiService<BaseResponseType = any> {
 
   get<T = BaseResponseType>(
     url: string,
+    params: Record<string, any> = {},
     loadingMessage = "Getting data..."
   ): Promise<T> {
     return this.request<T>(
       {
         url,
         method: "GET",
+        params,
       },
       loadingMessage
     );
