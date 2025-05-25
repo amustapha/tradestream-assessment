@@ -124,9 +124,21 @@
   );
 
   const tradesWithStoploss = computed(() => {
-    return props.chartData.trades.filter(
-      (trade) => trade.mae_percent <= stoplossValue.value / 100
-    );
+    return props.chartData.trades.map((trade) => {
+      if (trade.mae_percent <= stoplossValue.value / 100) {
+        return trade;
+      } else {
+        const pnl_without_fees = trade.pnl_usd - trade.fees;
+        const new_pnl =
+          Math.abs(pnl_without_fees * (stoplossValue.value / 100 / trade.mae_percent)) +
+          trade.fees;
+
+        return {
+          ...trade,
+          pnl_usd: new_pnl,
+        };
+      }
+    });
   });
 
   const winRate = (trades: Trade[]): number => {
