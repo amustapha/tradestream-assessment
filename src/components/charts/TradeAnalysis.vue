@@ -88,10 +88,15 @@
       />
     </div>
   </div>
-  <div class="grid lg:grid-cols-2 my-8">
+  <div class="grid lg:grid-cols-2 my-8 gap-8">
     <ProfitLineChart
       :real-trades="props.chartData.trades"
       :simulated-trades="tradesWithStoploss"
+    />
+
+    <EvXMae
+      :mae-levels="props.chartData.mae_levels"
+      :ev-values="props.chartData.ev_by_mae"
     />
   </div>
 </template>
@@ -100,6 +105,7 @@
   import TradeScatterPlot from "./TradeScatterPlot.vue";
   import Delta from "../display/Delta.vue";
   import ProfitLineChart from "./ProfitLineChart.vue";
+  import EvXMae from "./EvXMae.vue";
 
   import { computed, onMounted, ref, watch } from "vue";
   import { ChartData, Trade } from "../../types/chart.types";
