@@ -11,7 +11,7 @@ export class ChartDataApiService extends BaseApiService<any> {
   }
 
   getChartData(): Promise<ApiResponseWrapper<ChartData>> {
-    return this.get<string>("stoploss-optimizooor", { error: 1 }).then((r) => {
+    return this.get<string>("stoploss-optimizooor").then((r) => {
       return JSON.parse(
         r.replace("NaN", "null")
       ) as ApiResponseWrapper<ChartData>;
