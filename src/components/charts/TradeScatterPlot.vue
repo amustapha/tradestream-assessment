@@ -36,7 +36,7 @@
 
   const props = defineProps<{
     chartData: ChartData;
-    treshold: number;
+    treshold: number | string;
     minRange: number;
     maxRange: number;
   }>();
