@@ -7,3 +7,4 @@ Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://
 
 ## Challenges
 - I had trouble using the highcharts documentation to add a slider to the chart, I ended up hacking around it instead.
+- PNL recalculation does not seem to be working correctly. 
