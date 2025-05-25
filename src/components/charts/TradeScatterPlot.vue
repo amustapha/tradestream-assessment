@@ -3,14 +3,14 @@
     <highcharts :options="chartOptions" />
     <div class="absolute top-10 right-10">
       <button
-        class="bg-gray-800 text-white px-4 py-2 rounded-l-lg hover:bg-gray-700"
+        class="bg-gray-800 text-white px-4 py-2 rounded-l-lg hover:bg-gray-700 focus:bg-gray-600"
         :class="{ 'bg-gray-600': pnlKey === 'pnl_percent' }"
         @click="togglePnlType('pnl_percent')"
       >
         PNL %
       </button>
       <button
-        class="bg-gray-800 text-white px-4 py-2 rounded-r-lg hover:bg-gray-700"
+        class="bg-gray-800 text-white px-4 py-2 rounded-r-lg hover:bg-gray-700 focus:bg-gray-600"
         :class="{ 'bg-gray-600': pnlKey === 'pnl_usd' }"
         @click="togglePnlType('pnl_usd')"
       >
